@@ -1,0 +1,20 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/jammy64"
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "1024"
+  end
+
+  config.vm.define "servat19project" do |dockat19project|
+    dockat19project.vm.network "private_network", ip: '192.168.56.20'
+    dockat19project.vm.hostname = "dockat19project"
+    dockat19project.vm.provision "shell", inline: "echo 'Welcome to Converter & Recognition Studio v.10.0.11'"
+    dockat19project.vm.provision :file, source: "files", destination: "files"
+    dockat19project.vm.provision :shell, path: "dockinst.sh"
+    dockat19project.vm.provision :shell, path: "play.sh"
+  end
+
+end
